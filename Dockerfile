@@ -1,0 +1,12 @@
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+COPY target/air-quality-api-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 8080
+
+ENV SERVER_PORT=8080
+ENV APP_ENV=docker
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
