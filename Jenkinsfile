@@ -56,6 +56,19 @@ pipeline {
         }
     }
 }
+        stage('Docker Build') {
+    steps {
+        script {
+            def imageTag = "${env.BUILD_NUMBER}-${env.GIT_COMMIT.take(7)}"
+
+            sh """
+                docker build \
+                  -t air-quality-api:${imageTag} \
+                  .
+            """
+        }
+    }
+}
 
     }
 }
