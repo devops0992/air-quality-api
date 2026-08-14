@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: air-quality-api
+  labels:
+    app: air-quality-api
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: air-quality-api
+
+  template:
+    metadata:
+      labels:
+        app: air-quality-api
+    spec:
+      containers:
+        - name: air-quality-api
+          image: air-quality-api:BUILD_NUMBER
+
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080        
+          
+          env:
+            -name: SERVER_PORT
+             value: "8080"
+
+            -name: APP_ENV
+             value: "kubernetes"
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"    
+
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8080
+            initialDelaySeconds: 30   
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
