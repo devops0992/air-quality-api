@@ -27,6 +27,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     sh '''
                         docker run --rm \
+                          --network air-quality-network \
                           -v jenkins_home:/var/jenkins_home \
                           -w /var/jenkins_home/workspace/air-quality-api \
                           -e SONAR_HOST_URL="$SONAR_HOST_URL" \
