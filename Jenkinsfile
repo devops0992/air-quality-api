@@ -10,13 +10,15 @@ pipeline {
         }
 
         stage('Maven Test') {
-            steps {
-                script {
-                    docker.image('maven:3.9-eclipse-temurin-17').inside {
-                        sh 'mvn clean verify'
-                    }
-                }
-            }
+    steps {
+        sh '''
+            docker run --rm \
+              -v "$WORKSPACE:/workspace" \
+              -w /workspace \
+              maven:3.9-eclipse-temurin-17 \
+              mvn clean verify
+        '''
+           }
         }
 
     }
