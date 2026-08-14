@@ -10,15 +10,15 @@ pipeline {
         }
 
         stage('Maven Test') {
-    steps {
-        sh '''
-            docker run --rm \
-              -v "$WORKSPACE:/workspace" \
-              -w /workspace \
-              maven:3.9-eclipse-temurin-17 \
-              mvn clean verify
-        '''
-           }
+            steps {
+                sh '''
+                    docker run --rm \
+                      -v jenkins_home:/var/jenkins_home \
+                      -w /var/jenkins_home/workspace/air-quality-api \
+                      maven:3.9-eclipse-temurin-17 \
+                      mvn clean verify
+                '''
+            }
         }
 
     }
