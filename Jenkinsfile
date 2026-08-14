@@ -32,7 +32,7 @@ pipeline {
                           -e SONAR_HOST_URL="$SONAR_HOST_URL" \
                           -e SONAR_TOKEN="$SONAR_AUTH_TOKEN" \
                           maven:3.9-eclipse-temurin-17 \
-                          mvn sonar:sonar \
+                          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                           -Dsonar.projectKey=air-quality-api \
                           -Dsonar.projectName="Air Quality API" \
                           -Dsonar.host.url="$SONAR_HOST_URL" \
