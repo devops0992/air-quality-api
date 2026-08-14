@@ -59,30 +59,34 @@ pipeline {
         stage('Docker Build') {
     steps {
         script {
-            def imageTag = "${env.BUILD_NUMBER}-${env.GIT_COMMIT.take(7)}"
+            env.IMAGE_TAG = "${env.BUILD_NUMBER}-${env.GIT_COMMIT.take(7)}"
+            env.IMAGE_REF = "air-quality-api:${env.IMAGE_TAG}"
+
+            echo "Building image: ${env.IMAGE_REF}"
 
             sh """
                 docker build \
-                  -t air-quality-api:${imageTag} \
+                  -t ${env.IMAGE_REF} \
                   .
             """
         }
     }
 }
 
-        stage('Trivy Scan') {
+stage('Trivy Scan') {
     steps {
         sh '''
+            echo "Scanning image: ${IMAGE_REF}"
+
             docker run --rm \
               -v /var/run/docker.sock:/var/run/docker.sock \
               aquasec/trivy:latest \
               image \
               --severity HIGH,CRITICAL \
               --exit-code 1 \
-              ${IMAGE_NAME}:${IMAGE_TAG}
+              "${IMAGE_REF}"
         '''
     }
 }
-
     }
 }
