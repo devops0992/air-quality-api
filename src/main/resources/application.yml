@@ -26,3 +26,11 @@ info:
   app:
     name: ${spring.application.name}
     version: ${app.version}
+
+air-quality:
+  api:
+    base-url: https://air-quality-api.open-meteo.com
+
+geocoding:
+  api:
+    base-url: https://geocoding-api.open-meteo.com
