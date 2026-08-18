@@ -28,4 +28,4 @@ public class AirQualityController {
         }        
         return airQualityService.getCurrentAirQuality(city.trim());
     }
-}
+} 
