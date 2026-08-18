@@ -9,3 +9,6 @@ target/
 *.log
 
 effective-pom
+
+# SonarQube local database backup
+sonar-backup.mv.db
