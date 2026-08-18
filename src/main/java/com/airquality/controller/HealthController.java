@@ -11,6 +11,8 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class HealthController {
 
+    private static final String SERVICE_KEY = "service";
+
     @Value("${spring.application.name}")
     private String applicationName;
 
@@ -21,14 +23,14 @@ public class HealthController {
     public Map<String, Object> health() {
         return Map.of(
                 "status", "UP",
-                "service", applicationName
+                SERVICE_KEY, applicationName
         );
     }
 
     @GetMapping("/info")
     public Map<String, Object> info() {
         return Map.of(
-                "service", applicationName,
+                SERVICE_KEY, applicationName,
                 "description", "Real-Time Air Quality Intelligence Platform",
                 "environment", System.getenv().getOrDefault("APP_ENV", "local")
         );
@@ -38,7 +40,7 @@ public class HealthController {
     public Map<String, String> version() {
         return Map.of(
                 "version", version,
-                "service", applicationName
+                SERVICE_KEY, applicationName
         );
     }
 }

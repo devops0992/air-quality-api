@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -128,7 +129,7 @@ public class GlobalExceptionHandler {
                 error,
                 message,
                 request.getRequestURI(),
-                OffsetDateTime.now()
+                OffsetDateTime.now(ZoneOffset.UTC)
         );
 
         return ResponseEntity
